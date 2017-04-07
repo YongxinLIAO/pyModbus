@@ -7,16 +7,14 @@ print "Press Ctrl-C to stop."
 
 UR5ip = raw_input ("Please enter the IP address of UR5: ")
        
-
-client = ModbusTcpClient(UR5ip)
-
 while True:
+    client = ModbusTcpClient(UR5ip)
     FunctionCode = raw_input ("Please enter the Function Code (01 for Reading Coils and 03 for Reading Holding Registers): ")
     if FunctionCode == "01":
         StartingAddress = input ("Please enter the Starting Address: ")
         NumberOfCoils = input ("Please enter the Number of Coils: ")
         result = client.read_coils(StartingAddress,NumberOfCoils)
-        print result
+        print result.bits
     elif FunctionCode == "03":
         StartingAddress = input ("Please enter the Starting Address: ")
         NumberOfRegisters = input ("Please enter the Number of Registers: ")
@@ -24,5 +22,4 @@ while True:
         print result.registers
     else:
         break
-
-client.close()
+    client.close()
